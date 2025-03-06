@@ -38,6 +38,12 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
+          <Link to="/logged/chat">
+            <span className="nav-icon"><FaCommentDots className="ic"/></span>
+            <span className="title">Communicate</span>
+          </Link>
+        </li>
+        <li>
           <Link to="/logged/milk-production">
             <span className="nav-icon"><FaChartBar className="ic"/></span>
             <span className="title">Milk Production Details</span>

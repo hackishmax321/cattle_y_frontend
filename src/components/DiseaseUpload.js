@@ -7,6 +7,8 @@ const DiseaseUpload = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDisease, setSelectedDisease] = useState(null);
 
   // Content mapping for each condition
   const conditionInfo = {
@@ -79,57 +81,139 @@ const DiseaseUpload = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    const foundDisease = Object.keys(conditionInfo).find((key) =>
+      key.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setSelectedDisease(foundDisease ? conditionInfo[foundDisease] : null);
+  };
+
   return (
     <div className="recentOrders">
       <div className="cardHeader">
         <h2>Disease Detection</h2>
       </div>
 
-      {/* Image Upload Section */}
-      <div className="uploadSection">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="uploadButton"
-        />
-        {previewUrl && (
-          <div className="imagePreview">
-            <img src={previewUrl} alt="Preview" />
+      <br></br><br></br>
+
+      <h4 style={{ color: "green", textAlign: "center", marginBottom: "10px" }}>Search Diseases</h4>
+      <div style={{ 
+        border: "2px solid green", 
+        borderRadius: "15px", 
+        padding: "15px", 
+        marginTop: "20px",
+        backgroundColor: "#f0fff0" 
+      }}>
+        <div className="search" style={{ marginBottom: "15px" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <input
+              type="text"
+              placeholder="Search for disease"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="searchInput"
+              style={{
+                padding: "8px",
+                borderRadius: "5px",
+                border: "1px solid gray",
+                width: "100%"
+              }}
+            />
+            <ion-icon name="search-outline" style={{ fontSize: "20px", color: "green" }}></ion-icon>
+          </label>
+        </div>
+
+        {selectedDisease && (
+          <div className="diseaseDetails">
+            <h3 style={{ color: "green", marginBottom: "10px" }}>Condition: {searchQuery}</h3>
+            <p style={{ marginBottom: "10px" }}>{selectedDisease.description}</p>
+            <h4 style={{ color: "green", marginBottom: "10px" }}>Remedies:</h4>
+            <ul style={{ paddingLeft: "20px", marginBottom: "10px" }}>
+              {selectedDisease.remedies.map((remedy, index) => (
+                <li key={index} style={{ marginBottom: "5px" }}>{remedy}</li>
+              ))}
+            </ul>
+            {selectedDisease.image && (
+              <img 
+                src={selectedDisease.image} 
+                alt={searchQuery} 
+                className="diseaseImage" 
+                style={{ 
+                  width: "100%", 
+                  maxWidth: "300px", 
+                  display: "block", 
+                  margin: "10px auto", 
+                  borderRadius: "10px" 
+                }} 
+              />
+            )}
           </div>
         )}
-        <button onClick={handleDetectDisease} className="detectButton">
-          {loading ? 'Detecting...' : 'Detect Disease'}
-        </button>
       </div>
 
-      {/* Prediction Results */}
-      {prediction && (
-        <div className="predictionResult">
-          <h3>Prediction:</h3>
-          <p>
-            <strong>Label:</strong> {prediction.predicted_label}
-          </p>
-          <p>
-            <strong>Confidence:</strong> {(prediction.confidence * 100).toFixed(2)}%
-          </p>
+      <br></br><br></br>
 
-          {/* Display condition details and remedies */}
-          {prediction.predicted_label && conditionInfo[prediction.predicted_label] && (
-            <div className="conditionDetails">
-              <h4>Condition Details:</h4>
-              <p>{conditionInfo[prediction.predicted_label].description}</p>
-
-              <h5>Recommended Remedies:</h5>
-              <ul className='ct-rem'>
-                {conditionInfo[prediction.predicted_label].remedies.map((remedy, index) => (
-                  <li key={index}>{remedy}</li>
-                ))}
-              </ul>
+      <h4 style={{ color: "green", textAlign: "center", marginBottom: "10px" }}>Detect Based on Images</h4>
+      <div style={{ 
+        border: "2px solid green", 
+        borderRadius: "15px", 
+        padding: "15px", 
+        marginTop: "20px",
+        backgroundColor: "#f0fff0" 
+      }}>
+        <div className="uploadSection">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="uploadButton"
+          />
+          {previewUrl && (
+            <div className="imagePreview">
+              <img src={previewUrl} alt="Preview" />
             </div>
           )}
+          <button onClick={handleDetectDisease} className="detectButton">
+            {loading ? 'Detecting...' : 'Detect Disease'}
+          </button>
         </div>
-      )}
+
+        {/* Prediction Results */}
+        {prediction && (
+          <div className="predictionResult">
+            <h3>Prediction:</h3>
+            <p>
+              <strong>Label:</strong> {prediction.predicted_label}
+            </p>
+            <p>
+              <strong>Confidence:</strong> {(prediction.confidence * 100).toFixed(2)}%
+            </p>
+
+            {/* Display condition details and remedies */}
+            {prediction.predicted_label && conditionInfo[prediction.predicted_label] && (
+              <div className="conditionDetails">
+                <h4>Condition Details:</h4>
+                <p>{conditionInfo[prediction.predicted_label].description}</p>
+
+                <h5>Recommended Remedies:</h5>
+                <ul className='ct-rem'>
+                  {conditionInfo[prediction.predicted_label].remedies.map((remedy, index) => (
+                    <li key={index}>{remedy}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+        
+      </div>  
+
+      {/* Image Upload Section */}
+      
+
+      {/* Disease Search */}
+
     </div>
   );
 };

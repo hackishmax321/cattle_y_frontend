@@ -15,12 +15,14 @@ const MilkCollectionReport = ({ weatherData, cattles, username }) => {
 
   useEffect(() => {
     const fetchMilkProductionData = async () => {
+      console.log("Fetch");
       if (!weatherData || weatherData.length === 0) {
         setError("No weather data available.");
+        console.log("No weather data available.");
         setLoading(true);
         return;
       }
-  
+      console.log("Fetch2");
       try {
         const today = new Date();
         const year = today.getFullYear();
@@ -34,9 +36,11 @@ const MilkCollectionReport = ({ weatherData, cattles, username }) => {
           let validMonth = currentDate.getMonth();
     
           // Break if the month changes (to ensure we're only getting the current month)
-          if (validMonth !== month) {
-            break;
-          }
+          // if (validMonth !== month) {
+          //   break;
+          // }
+
+          console.log("Fetch3");
   
           dates.push(currentDate.toISOString().split("T")[0]); // Format YYYY-MM-DD
         }
@@ -73,6 +77,7 @@ const MilkCollectionReport = ({ weatherData, cattles, username }) => {
           predictions[date] = response.data.predicted_milk_liters*cattles.length;
           const summaryResponse = await axios.get(`${ENV.SERVER}/milk-summary/${username}/${date}`);
           actuals[date] = summaryResponse.data.summary?.actual_total || 0;
+          console.log(summaryResponse.data)
         }
   
         setChartData({

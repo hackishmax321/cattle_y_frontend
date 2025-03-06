@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import ENV from '../data/Env';
 import axios from 'axios';
 import UpdateCattlePopup from './UpdateCattlePopup';
+import { useNavigate } from 'react-router-dom';
 
 const UserSummary = ({user, cattles, removeCattle}) => {
+  const navigate = useNavigate()
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [selectedCattle, setSelectedCattle] = useState(null);
 
@@ -98,6 +100,7 @@ const UserSummary = ({user, cattles, removeCattle}) => {
             const { years, months } = calculateAge(cattle.birth); // Calculate age
             return (
               <div
+              
                 key={cattle.id}
                 style={{
                   backgroundColor: '#f9f9f9',
@@ -112,7 +115,10 @@ const UserSummary = ({user, cattles, removeCattle}) => {
                 {/* Image Section */}
                 <div style={{ flex: 2, marginRight: '16px' }}>
                   <div style={{ marginBottom: '8px' }}>
-                    <h3>{cattle.name}</h3> 
+                    <h3 
+                    onClick={() => {
+                      navigate('/logged/cattle', { state: { cattle } });
+                    }}>{cattle.name}</h3> 
                     <small>({cattle.id})</small>
                   </div>
                   <img

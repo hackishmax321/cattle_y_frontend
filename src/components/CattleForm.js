@@ -4,10 +4,11 @@ import ENV from "../data/Env";
 import Notiflix from "notiflix";
 
 const CattleForm = ({ user, addNewCattle }) => {
+  const today = new Date().toISOString().split("T")[0];
   const [formData, setFormData] = useState({
     name: "",
     breed: "Sahiwal",
-    birth: "",
+    birth: today,
     health: "Healthy",
     status: "Active",
     image: "https://www.shutterstock.com/image-vector/cows-silhouettes-different-poses-cow-600nw-2497026899.jpg",
