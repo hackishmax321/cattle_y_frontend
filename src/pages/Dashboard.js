@@ -6,6 +6,7 @@ import RecentOrders from '../components/RecentOrders';
 import RecentCustomers from '../components/RecentCustomers';
 import Footer from '../components/Footer';
 import Card from '../components/Card';
+import RecentAppointments from '../components/RecentAppointments';
 
 const Dashboard = () => {
   return (
@@ -20,7 +21,7 @@ const Dashboard = () => {
           <Card numbers="0 Daily" cardName="Feeding" icon='/icons/feed-icon-removebg-preview.png' />
         </div>
         <div className="details">
-          <RecentOrders />
+          <RecentAppointments/>
           <RecentCustomers />
         </div>
         <Footer />

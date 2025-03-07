@@ -23,6 +23,43 @@ const VetLocate = () => {
   const [reviewRating, setReviewRating] = useState(5);
   const [authorName, setAuthorName] = useState("");
 
+  const [formData, setFormData] = useState({
+    title: "",
+    date: "",
+    time: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const payload = {
+      ...formData,
+      username: user?.username, // Replace with actual user
+      accepted: false,
+    };
+
+    try {
+      const response = await fetch(ENV.SERVER+"/appointments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("Appointment created successfully!");
+      } else {
+        alert(`Error: ${result.detail}`);
+      }
+    } catch (error) {
+      console.error("Error submitting appointment:", error);
+      alert("Failed to create appointment.");
+    }
+  };
+
   useEffect(() => {
     // Fetch user's current location
     if (navigator.geolocation) {
@@ -279,49 +316,12 @@ const VetLocate = () => {
               ×
             </button>
             <h2>Book Appointment at {selectedLocation?.name}</h2>
-            <input
-              type="text"
-              placeholder="Title"
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-            <input
-              type="date"
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-            <input
-              type="time"
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-            <textarea
-              placeholder="Message"
-              style={{
-                width: "100%",
-                padding: "8px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                minHeight: "60px",
-              }}
-            ></textarea>
+            <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} style={inputStyle} />
+            <input type="date" name="date" value={formData.date} onChange={handleChange} style={inputStyle} />
+            <input type="time" name="time" value={formData.time} onChange={handleChange} style={inputStyle} />
+            <textarea name="message" placeholder="Message" value={formData.message} onChange={handleChange} style={inputStyle} />
             <button
+              onClick={handleSubmit}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -340,6 +340,14 @@ const VetLocate = () => {
 
     </div>
   );
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginBottom: "8px",
+  border: "1px solid #ccc",
+  borderRadius: "5px",
 };
 
 export default VetLocate;

@@ -22,9 +22,14 @@ const UpdateCattlePopup = ({ cattle, onClose, onUpdate }) => {
       Notiflix.Notify.failure("Please update at least one field.");
       return;
     }
-
+  
     try {
-      await axios.put(`${ENV.SERVER}/cattle/${cattle.id}`, formData);
+      console.log(formData);
+      await axios.put(`${ENV.SERVER}/cattle/${cattle.id}`, {
+        health: formData.health || undefined,
+        status: formData.status || undefined,
+      });
+      
       Notiflix.Notify.success("Cattle updated successfully!");
       onClose();
     } catch (error) {
