@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './forms.css';
 import axios from 'axios';
 import Notiflix from 'notiflix';
+import ENV from '../../data/Env';
 
 const SignIn = () => {
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const SignIn = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/login', formData);
+      const response = await axios.post(ENV.SERVER+'/login', formData);
       Notiflix.Notify.success('Login successful');
       if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data.user));

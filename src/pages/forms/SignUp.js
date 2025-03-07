@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Notiflix from 'notiflix';
 import './forms.css';
+import ENV from '../../data/Env';
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ const SignUp = () => {
     if (validateForm()) {
       try {
         console.log(formData)
-        const response = await axios.post('http://localhost:8000/register', formData);
+        const response = await axios.post(ENV.SERVER+'/register', formData);
         Notiflix.Notify.success('Registration successful');
         navigate('/sign-in')
       } catch (error) {
