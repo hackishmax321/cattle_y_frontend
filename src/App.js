@@ -24,16 +24,12 @@ function App() {
     <Router>
       <Routes>
         {/* Redirect based on user session */}
-        <Route path="/" element={user ? <Navigate to="/logged/dashboard" /> : <Home />} />
+        <Route path="/" element={user ? <Dashboard /> : <Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/profile-upload" element={<ProfilePictureUpload />} />
-        
-        {/* Protected Routes */}
-        {user ? (
-          <>
-            <Route path="/logged/dashboard" element={<Dashboard />} />
+        <Route path="/logged/dashboard" element={<Dashboard />} />
             <Route path="/logged/profile" element={<CowProfile />} />
             <Route path="/logged/cattle" element={<CattleSummary />} />
             <Route path="/logged/disease-detection" element={<DiseaseDetection />} />
@@ -41,10 +37,9 @@ function App() {
             <Route path="/logged/milk-production" element={<MilkProduction />} />
             <Route path="/logged/chat" element={<ChatSection />} />
             <Route path="/logged/map" element={<VetLocate />} />
-          </>
-        ) : (
-          <Route path="*" element={<Navigate to="/" />} />
-        )}
+            <Route path="*" element={<Navigate to="/" />} />
+        
+        
       </Routes>
     </Router>
   );

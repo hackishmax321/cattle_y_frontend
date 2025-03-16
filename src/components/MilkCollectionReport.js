@@ -13,6 +13,53 @@ const MilkCollectionReport = ({ weatherData, cattles, username }) => {
   const [manualData, setManualData] = useState({});
   const [selectedCattle, setSelectedCattle] = useState(null);
 
+
+  // useEffect(() => {
+  //   const fetchMilkRecords = async () => {
+  //     console.log("GG")
+  //     try {
+  //       const response = await axios.get(`${ENV.SERVER}/milk-records/${username}`);
+  //       const records = response.data.records;
+
+  //       // Group records by date
+  //       const dataByDate = {};
+  //       records.forEach((record) => {
+  //         if (!dataByDate[record.date]) {
+  //           dataByDate[record.date] = 0;
+  //         }
+  //         dataByDate[record.date] += record.amount; // Sum milk collection per date
+  //       });
+
+  //       console.log(records);
+
+  //       // Prepare data for Chart.js
+  //       const labels = Object.keys(dataByDate).sort(); // Dates as labels
+  //       const dataPoints = labels.map((date) => dataByDate[date]); // Values
+
+  //       setChartData({
+  //         labels,
+  //         datasets: [
+  //           {
+  //             label: "Milk Collected (Liters)",
+  //             data: dataPoints,
+  //             borderColor: "blue",
+  //             backgroundColor: "rgba(0, 0, 255, 0.2)",
+  //             pointBackgroundColor: "blue",
+  //             fill: true,
+  //           },
+  //         ],
+  //       });
+
+  //       setLoading(false);
+  //     } catch (err) {
+  //       setError("Error fetching milk records");
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchMilkRecords();
+  // }, [username]);
+
   useEffect(() => {
     const fetchMilkProductionData = async () => {
       console.log("Fetch");
@@ -117,7 +164,9 @@ const MilkCollectionReport = ({ weatherData, cattles, username }) => {
   const addManualEntry = () => {
     const dateInput = document.getElementById("manual-date").value;
     const amountInput = document.getElementById("manual-amount").value;
-  
+
+    
+
     if (!selectedCattle) {
       alert("Please select a cattle before adding a milk record.");
       return;
@@ -223,6 +272,7 @@ const selectCattle = (cattle) => {
   const updateEntry = async () => {
     const dateInput = document.getElementById("manual-date").value;
     const amountInput = document.getElementById("manual-amount").value;
+    const feedInput = document.getElementById("manual-feedback").value;
   
     if (!selectedCattle) {
       alert("Please select a cattle before updating a milk record.");
@@ -241,7 +291,8 @@ const selectCattle = (cattle) => {
       const milkRecord = {
         cattle_id: selectedCattle.id,
         amount: parseFloat(amountInput),
-        status: "ok", // You can adjust the status if necessary
+        status: "ok", 
+        feedback: feedInput
       };
   
       await axios.post(`${ENV.SERVER}/milk-record/${selectedCattle.owner}/${formattedDate}`, milkRecord);
@@ -272,6 +323,14 @@ const selectCattle = (cattle) => {
       </div>
       <div className="cardHeader">
         <h2>Milk Records</h2>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px", marginBottom: '10px' }}>
+        <input 
+            type="text" 
+            id="manual-feedback" 
+            placeholder="Feedback" 
+            style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} 
+          />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
         
@@ -342,6 +401,9 @@ const selectCattle = (cattle) => {
             </div>
           ))
         )}
+      </div>
+      <div className="cardHeader">
+        <h2>Previous Records</h2>
       </div>
     </div>
   );

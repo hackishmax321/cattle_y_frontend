@@ -34,7 +34,7 @@ const SignIn = () => {
       if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data.user));
         // Redirect to home page
-        navigate('/logged/dashboard')
+        navigate('/logged/profile')
       } else {
         Notiflix.Notify.failure("Login Failed! Check your credentials and try Again");
       }

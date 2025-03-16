@@ -47,9 +47,9 @@ const CattleMonitor = ({ cattle }) => {
   }, [cattle]);
 
   useEffect(() => {
-    const iotCOUNT = ref(db, 'COUNT'); 
+    const iotCOUNT = ref(db, 'BPM'); 
     const iotDegreeC = ref(db, 'DegreeC'); 
-    const iotTrance = ref(db, 'trance'); 
+    const iotTrance = ref(db, 'Spo2'); 
   
     // Fetch data from multiple references
     const unsubscribeCOUNT = onValue(iotCOUNT, (snapshot) => {
