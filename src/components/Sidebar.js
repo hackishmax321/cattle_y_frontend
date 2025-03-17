@@ -50,6 +50,12 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
+          <Link to="/logged/milk-records">
+            <span className="nav-icon"><FaChartBar className="ic"/></span>
+            <span className="title">Milk Records History</span>
+          </Link>
+        </li>
+        <li>
           <Link to="/logged/disease-detection">
             <span className="nav-icon"><FaCog className="ic"/></span>
             <span className="title">Disease Detection</span>

@@ -13,6 +13,8 @@ import VetLocate from './pages/VetLocateMap';
 import CowProfile from './pages/CowProfile';
 import ChatSection from './pages/ChatSection';
 import CattleSummary from './pages/CattleSummary';
+import MilkRecords from './components/MilkRecords';
+import MilkHistory from './pages/MilkHistory';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -35,6 +37,7 @@ function App() {
             <Route path="/logged/disease-detection" element={<DiseaseDetection />} />
             <Route path="/logged/health-monitor" element={<HealthMonitor />} /> 
             <Route path="/logged/milk-production" element={<MilkProduction />} />
+            <Route path="/logged/milk-records" element={<MilkHistory />} />
             <Route path="/logged/chat" element={<ChatSection />} />
             <Route path="/logged/map" element={<VetLocate />} />
             <Route path="*" element={<Navigate to="/" />} />
