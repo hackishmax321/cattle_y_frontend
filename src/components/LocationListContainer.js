@@ -1,6 +1,6 @@
 import React from "react";
 
-const LocationsListContainer = ({ locations, setSelectedLocation,  setShowReviewsPopup, setShowAppointmentPopup }) => {
+const LocationsListContainer = ({ locations, setSelectedLocation,  setShowReviewsPopup, setShowAppointmentPopup, user }) => {
   return (
     <div className="recentCustomers">
       <div className="cardHeader">
@@ -55,7 +55,7 @@ const LocationsListContainer = ({ locations, setSelectedLocation,  setShowReview
                     See Reviews
                 </button>
 
-                <button
+                {user?.role!='Veterinarian'&&<button
                     onClick={(e) => {
                     e.stopPropagation();
                     setSelectedLocation(location);
@@ -74,7 +74,7 @@ const LocationsListContainer = ({ locations, setSelectedLocation,  setShowReview
                     }}
                 >
                     Make Appointment
-                </button>
+                </button>}
             </div>
 
           </div>

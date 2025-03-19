@@ -115,7 +115,7 @@ const UserSummary = ({user, cattles, removeCattle}) => {
                 {/* Image Section */}
                 <div style={{ flex: 2, marginRight: '16px' }}>
                   <div style={{ marginBottom: '8px' }}>
-                    <h3 
+                    <h3 style={{cursor: 'pointer'}}
                     onClick={() => {
                       navigate('/logged/cattle', { state: { cattle } });
                     }}>{cattle.name}</h3> 

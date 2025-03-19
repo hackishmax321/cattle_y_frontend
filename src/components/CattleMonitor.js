@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../data/Firebase';
 import { ref, onValue } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
+import VaccinationForm from './VaacinationForm';
 
 const CattleMonitor = ({ cattle }) => {
     const navigate = useNavigate()
@@ -13,6 +14,7 @@ const CattleMonitor = ({ cattle }) => {
     const ageInMonths = Math.floor((ageInMilliseconds % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
     return `${ageInYears} years, ${ageInMonths} months`;
   };
+  const [showAlert, setShowAlert] = useState(false)
 
   const [cowData, setCowData] = useState({
     name: '',
@@ -26,9 +28,9 @@ const CattleMonitor = ({ cattle }) => {
   });
 
   const [iotData, setIotData] = useState({
-    COUNT: 'Loading...',
+    BPM: 'Loading...',
     DegreeC: 'Loading...',
-    trance: 'Loading...',
+    OXY: 'Loading...',
   });
 
   useEffect(() => {
@@ -47,54 +49,64 @@ const CattleMonitor = ({ cattle }) => {
   }, [cattle]);
 
   useEffect(() => {
-    const iotCOUNT = ref(db, 'BPM'); 
-    const iotDegreeC = ref(db, 'DegreeC'); 
-    const iotTrance = ref(db, 'Spo2'); 
-  
-    // Fetch data from multiple references
-    const unsubscribeCOUNT = onValue(iotCOUNT, (snapshot) => {
-        console.log(snapshot.val())
-      setIotData((prevData) => ({
-        ...prevData,
-        COUNT: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
-      }));
-    });
-  
-    const unsubscribeDegreeC = onValue(iotDegreeC, (snapshot) => {
-      setIotData((prevData) => ({
-        ...prevData,
-        DegreeC: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
-      }));
-    });
-  
-    const unsubscribeTrance = onValue(iotTrance, (snapshot) => {
-      setIotData((prevData) => ({
-        ...prevData,
-        trance: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
-      }));
-    });
-  
-    // Cleanup function to unsubscribe on unmount
-    return () => {
-      unsubscribeCOUNT();
-      unsubscribeDegreeC();
-      unsubscribeTrance();
+    const fetchData = () => {
+      const iotHR = ref(db, 'BPM'); 
+      const iotDegreeC = ref(db, 'DegreeC'); 
+      const iotOxy = ref(db, 'Spo2'); 
+
+      onValue(iotHR, (snapshot) => {
+        setIotData((prev) => ({
+          ...prev,
+          BPM: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
+        }));
+      });
+
+      onValue(iotDegreeC, (snapshot) => {
+        setIotData((prev) => ({
+          ...prev,
+          DegreeC: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
+        }));
+      });
+
+      onValue(iotOxy, (snapshot) => {
+        setIotData((prev) => ({
+          ...prev,
+          OXY: snapshot.val() !== null ? Number(snapshot.val()) : 'N/A',
+        }));
+      });
+
+      // Check if any value is out of the valid range
+      if (
+        isOutOfRange(iotData.DegreeC, 38.5, 39.5) ||
+        isOutOfRange(iotData.OXY, 48, 84) ||
+        isOutOfRange(iotData.BPM, 95, 100)
+      ) {
+        setShowAlert(true); // Show alert if any value is out of range
+      } else {
+        setShowAlert(false); // Hide alert if all values are within range
+      }
     };
-  }, []);
+
+    // Fetch data initially and then every 5 seconds
+    fetchData();
+    const interval = setInterval(fetchData, 5000);
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [iotData]);
 
   const isOutOfRange = (value, min, max) => value < min || value > max;
 
-  const showAlert = 
-    isOutOfRange(iotData.DegreeC, 38.5, 39.5) ||
-    isOutOfRange(iotData.trance, 48, 84) ||
-    isOutOfRange(iotData.COUNT, 95, 100);
+  
+
+  
 
   const getActionInstructions = () => {
-    if (isOutOfRange.DegreeC && isOutOfRange.COUNT) {
+    console.log(isOutOfRange(iotData.DegreeC, 38.5, 39.5))
+    if (isOutOfRange.DegreeC && isOutOfRange.BPM) {
       return "The cow is experiencing abnormal body temperature and low oxygen levels. Ensure a proper ventilation system, provide cool water, and consult a veterinarian immediately.";
     } else if (isOutOfRange.DegreeC) {
       return "The cow's body temperature is outside the normal range. Provide a cool and shaded environment, ensure hydration, and monitor closely.";
-    } else if (isOutOfRange.COUNT) {
+    } else if (isOutOfRange.BPM) {
       return "The cow's oxygen saturation is below normal. Check for respiratory issues, improve ventilation, and seek veterinary attention.";
     }
     return "Health parameters are within the normal range.";
@@ -165,19 +177,61 @@ const CattleMonitor = ({ cattle }) => {
                     <td style={thTdStyle}>38.5 - 39.5°C</td>
                     <td style={thTdStyle}>{iotData.DegreeC}°C</td>
                 </tr>
-                <tr style={isOutOfRange(iotData.trance, 48, 84) ? { backgroundColor: 'red', color: 'white' } : {}}>
+                <tr style={isOutOfRange(iotData.BPM, 48, 84) ? { backgroundColor: 'red', color: 'white' } : {}}>
                     <td style={thTdStyle}>Heart Rate (Pulse Rate)</td>
                     <td style={thTdStyle}>48 - 84 bpm</td>
-                    <td style={thTdStyle}>{iotData.trance} bpm</td>
+                    <td style={thTdStyle}>{iotData.BPM} bpm</td>
                 </tr>
-                <tr style={isOutOfRange(iotData.COUNT, 95, 100) ? { backgroundColor: 'red', color: 'white' } : {}}>
+                <tr style={isOutOfRange(iotData.OXY, 95, 100) ? { backgroundColor: 'red', color: 'white' } : {}}>
                     <td style={thTdStyle}>Oxygen Saturation</td>
                     <td style={thTdStyle}>95 - 100%</td>
-                    <td style={thTdStyle}>{iotData.COUNT}%</td>
+                    <td style={thTdStyle}>{iotData.OXY}%</td>
                 </tr>
             </tbody>
           </table>
-          <p style={{ color: 'red', fontWeight: 'bold' }}>{getActionInstructions()}</p>
+          {/* <p style={{ color: 'red', fontWeight: 'bold' }}>{getActionInstructions()}</p> */}
+
+          {showAlert && (
+            <div 
+              style={{
+                backgroundColor: '#ffcccb',
+                padding: '15px',
+                borderRadius: '10px',
+                color: '#c0392b',
+                marginTop: '10px',
+                boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
+                textAlign: 'left'
+              }}
+            >
+              <h3 style={{ margin: '0 0 10px 0', textAlign: 'center' }}>⚠️ Unhealthy Cattle Alert</h3>
+              <ul style={{ paddingLeft: '20px' }}>
+                <li>✔️ Check body temperature and hydration levels.</li>
+                <li>✔️ Ensure proper feeding and mineral supplements.</li>
+                <li>✔️ Isolate sick cattle from the healthy ones.</li>
+                <li>✔️ Contact a veterinarian for further examination.</li>
+                <li>✔️ Keep track of symptoms for better diagnosis.</li>
+              </ul>
+
+              <button 
+                onClick={() => navigate('/logged/map')}
+                style={{ 
+                  backgroundColor: '#e74c3c', 
+                  color: 'white', 
+                  padding: '10px 15px', 
+                  border: 'none', 
+                  borderRadius: '5px', 
+                  cursor: 'pointer', 
+                  marginTop: '10px', 
+                  width: '100%',
+                  display: 'block',
+                  textAlign: 'center'
+                }}
+              >
+                Get Treatments
+              </button>
+            </div>
+          )}
+
           {showAlert && <button 
           onClick={() => {navigate('/logged/map')}}
           style={{ backgroundColor: '#e74c3c', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '10px' }}>Get Treatments</button>}
@@ -206,6 +260,8 @@ const CattleMonitor = ({ cattle }) => {
         <p><strong>Nutrition and Food:</strong> Provide a balanced diet rich in minerals and vitamins.</p>
         <button style={buttonStyle}>Contact Vet</button>
       </div>
+      <br></br><br></br>
+      <VaccinationForm />
     </div>
   );
 };

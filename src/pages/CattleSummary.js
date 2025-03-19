@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import HealthRecordForm from '../components/HeaalthRecordsForm';
 import CattleMonitor from '../components/CattleMonitor';
 import { useLocation } from 'react-router-dom';
+import FeedIntakes from '../components/FeedIntakes';
 
 const CattleSummary = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const CattleSummary = () => {
         <Topbar />
         <div className="details">
           <CattleMonitor cattle={cattle}/>
-          <HealthRecordForm />
+          <FeedIntakes />
         </div>
         <Footer />
       </div>

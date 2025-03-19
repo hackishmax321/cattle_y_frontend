@@ -15,7 +15,8 @@ const SignUp = () => {
     contact: '',
     password: '',
     confirmPassword: '',
-    nic: ''
+    nic: '',
+    role: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -95,6 +96,16 @@ const SignUp = () => {
           <div className="form-group">
             <label>NIC</label>
             <input type="text" name="nic" placeholder="Enter NIC" value={formData.nic} onChange={handleChange} />
+          </div>
+
+          <div className="form-group">
+            <label>Role</label>
+            <select name="role" value={formData.role} onChange={handleChange} className="role-select">
+              <option value="Farmer">Farmer</option>
+              <option value="Veterinarian">Veterinarian</option>
+              <option value="Agricultural Consultant">Agricultural Consultant</option>
+              <option value="Supplier">Supplier</option>
+            </select>
           </div>
 
           <div className="form-group row">

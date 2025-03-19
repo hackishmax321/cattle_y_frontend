@@ -28,7 +28,7 @@ const MilkRecords = () => {
   }, [username]);
 
   return (
-    <div style={styles.container}>
+    <div className="recentOrders">
       <div style={styles.header}>
         <h2>Milk Records</h2>
       </div>

@@ -16,7 +16,7 @@ const VetLocate = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [showReviewsPopup, setShowReviewsPopup] = useState(false); // Toggle review popup
+  const [showReviewsPopup, setShowReviewsPopup] = useState(false); 
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
 
   const [reviewText, setReviewText] = useState("");
@@ -24,7 +24,7 @@ const VetLocate = () => {
   const [authorName, setAuthorName] = useState("");
 
   const [formData, setFormData] = useState({
-    title: "",
+    // title: "",
     date: "",
     time: "",
     message: "",
@@ -34,9 +34,10 @@ const VetLocate = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (outlet) => {
     const payload = {
       ...formData,
+      title: outlet,
       username: user?.username, // Replace with actual user
       accepted: false,
     };
@@ -91,8 +92,10 @@ const VetLocate = () => {
             latitude: currentLocation.lat,
             longitude: currentLocation.lng,
           });
+          console.log(currentLocation.lat)
 
           if (response.data.locations) {
+            console.log(response)
             setLocations(response.data.locations);
           }
         } catch (error) {
@@ -142,6 +145,7 @@ const VetLocate = () => {
           />
           <LocationsListContainer
             locations={locations}
+            user={user}
             setSelectedLocation={setSelectedLocation}
             setShowReviewsPopup={setShowReviewsPopup}
             setShowAppointmentPopup={setShowAppointmentPopup}
@@ -316,12 +320,12 @@ const VetLocate = () => {
               ×
             </button>
             <h2>Book Appointment at {selectedLocation?.name}</h2>
-            <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} style={inputStyle} />
+            {/* <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} style={inputStyle} /> */}
             <input type="date" name="date" value={formData.date} onChange={handleChange} style={inputStyle} />
             <input type="time" name="time" value={formData.time} onChange={handleChange} style={inputStyle} />
             <textarea name="message" placeholder="Message" value={formData.message} onChange={handleChange} style={inputStyle} />
             <button
-              onClick={handleSubmit}
+              onClick={() =>handleSubmit(selectedLocation?.name)}
               style={{
                 width: "100%",
                 padding: "10px",

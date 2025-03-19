@@ -94,7 +94,7 @@ body {
   background: var(--blue);
   border-left: 10px solid var(--blue);
   transition: 0.5s;
-  overflow: hidden;
+  overflow: scroll;
   
 }
 .navigation.active {
@@ -135,6 +135,7 @@ body {
   width: 100%;
   display: flex;
   text-decoration: none;
+  font-size: 16px;
   color: var(--white);
 }
 .navigation ul li:hover a,
@@ -1089,3 +1090,5 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+
+
