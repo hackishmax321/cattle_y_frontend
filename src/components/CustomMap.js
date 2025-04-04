@@ -9,7 +9,7 @@ const CustomMap = ({ currentLocation, locations, selectedLocation, setSelectedLo
       </div>
 
       <div style={{ height: "600px", width: "100%" }}>
-        <LoadScript googleMapsApiKey="AIzaSyDoaoxfgJdFuzPIwhS_w1I_bOVm7DxPXXM">
+        <LoadScript googleMapsApiKey="AIzaSyDTJjnuqF0J18Uu_Ft2TA5R13WsyyDbo4U">
           {/* AIzaSyDAsJYZSQ92_NQAz9kiSpW1XpyuCxRl_uI */}
           <GoogleMap
             mapContainerStyle={{ height: "100%", width: "100%" }}

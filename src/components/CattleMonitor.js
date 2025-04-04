@@ -78,9 +78,13 @@ const CattleMonitor = ({ cattle }) => {
       // Check if any value is out of the valid range
       if (
         isOutOfRange(iotData.DegreeC, 38.5, 39.5) ||
-        isOutOfRange(iotData.OXY, 48, 84) ||
-        isOutOfRange(iotData.BPM, 95, 100)
+        isOutOfRange(iotData.BPM, 48, 84) ||
+        isOutOfRange(iotData.OXY, 95, 100)
       ) {
+        console.log("++++++++");
+        console.log("TEMP"+isOutOfRange(iotData.DegreeC, 38.5, 39.5));
+        console.log("OXY"+isOutOfRange(iotData.OXY, 48, 84));
+        console.log("BPM"+isOutOfRange(iotData.BPM, 95, 100));
         setShowAlert(true); // Show alert if any value is out of range
       } else {
         setShowAlert(false); // Hide alert if all values are within range
@@ -239,7 +243,7 @@ const CattleMonitor = ({ cattle }) => {
       </div>
 
       {/* Reminder and Alert Set */}
-      <div style={{ marginTop: '20px' }}>
+      {/* <div style={{ marginTop: '20px' }}>
         <h3>Reminder and Alert Set</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', marginTop: '10px' }}>
           <input placeholder="Vet Checkup" style={inputStyle} />
@@ -249,7 +253,7 @@ const CattleMonitor = ({ cattle }) => {
           <input placeholder="Medical Treatment" style={inputStyle} />
           <button style={buttonStyle}>Set</button>
         </div>
-      </div>
+      </div> */}
 
       {/* Action and Recommendation */}
       <div style={{ marginTop: '20px' }}>

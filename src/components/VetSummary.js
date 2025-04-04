@@ -123,7 +123,7 @@ const VeterinarianSummary = ({ veterinarian, appointments, removeAppointment }) 
 
                 <div style={{ marginBottom: '8px' }}>
                   <button
-                    onClick={() => navigate('/logged/chat')}
+                    onClick={() => navigate('/logged/chat/'+appointment.username)}
                     style={{
                       backgroundColor: 'blue',
                       color: 'white',

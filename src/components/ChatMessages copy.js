@@ -18,66 +18,48 @@ const ChatMessages = () => {
   });
 
   useEffect(() => {
-    const fetchPreviousMessages = async () => {
-      try {
-        const response = await fetch(`${ENV.SERVER}/chat/${user.role!='Veterinarian'?user.username:user.full_name}/${receiver}`);
-        const data = await response.json();
-        if (data.status === "success") {
-          // Convert API messages to required format: {time, client_id, message}
-          const formattedMessages = data.data.map((msg) => ({
-            time: msg.timestamp,
-            client_id: msg.sender, // Map sender to client_id
-            message: msg.message,
-          }));
-          setMessages(formattedMessages);
-        }
-      } catch (error) {
-        console.error("Error fetching previous messages:", error);
-      }
-    };
-
-    fetchPreviousMessages();
-
-    const url = `ws://localhost:8000/ws/${user.role!='Veterinarian'?user.username:user.full_name}`;
+    const url = `ws://localhost:8000/ws/${user.username}`;
     const ws = new WebSocket(url);
-  
+
     ws.onopen = () => ws.send("Connect");
-  
+
     ws.onmessage = (e) => {
       const message = JSON.parse(e.data);
       setMessages((prevMessages) => [...prevMessages, message]);
     };
-  
+
     setWebSocket(ws);
     return () => ws.close();
   }, []);
-  
+
   const sendMessage = async () => {
     if (newMessage.trim() === "" && !filePreview) return;
-  
+
     const finalMessage = newMessage + (filePreview ? ` ${filePreview}` : "");
     websocket.send(finalMessage);
-  
-    // Remove the local state update to avoid duplicating the message
-    // setMessages((prevMessages) => [
-    //   ...prevMessages,
-    //   { client_id: user.username, message: finalMessage },
-    // ]);
 
-    try {
-      await fetch(`${ENV.SERVER}/chat-save`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sender: user.role!=='Veterinarian'?user.username:user.full_name,
-          receiver: receiver,
-          message: finalMessage,
-        }),
-      });
-    } catch (error) {
-      console.error("Error saving chat message:", error);
+    
+    websocket.onmessage = (e) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { client_id: user.username, message: finalMessage },
+      ]);
     }
-  
+
+    // try {
+    //   await fetch(`${ENV.SERVER}/chat-save`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       sender: user.username,
+    //       receiver: receiver,
+    //       message: finalMessage,
+    //     }),
+    //   });
+    // } catch (error) {
+    //   console.error("Error saving chat message:", error);
+    // }
+
     setNewMessage("");
     setFile(null);
     setFilePreview(null);
@@ -112,14 +94,14 @@ const ChatMessages = () => {
   };
 
   return (
-    <div className="recentOrders" style={{maxHeight: '80vh'}}>
+    <div className="recentOrders">
       <div className="cardHeader">
         <h2>Chat Messages</h2>
       </div>
       
-      <div className="chatMessages" style={{maxHeight: '60vh'}}>
+      <div className="chatMessages">
         {messages.map((msg, index) => {
-          const isSelf = msg.client_id === (user.role!='Veterinarian'?user.username:user.full_name);
+          const isSelf = msg.client_id === user.username;
           const isImage = msg.message.match(/\.(jpeg|jpg|png|gif)$/);
           const isFile = msg.message.match(/\.(pdf|docx|txt)$/);
           

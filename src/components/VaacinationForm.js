@@ -63,7 +63,7 @@ const VaccinationForm = ({ temp }) => {
         // backgroundColor: "#f9f9f9",
       }}
     >
-      <h2 style={{ textAlign: "center" }}>Vaccination Notifier</h2>
+      <h2 style={{ textAlign: "center" }}>Reminder and Alert Set</h2>
       <form onSubmit={handleVaccinationSubmit}>
         <div style={{ marginBottom: "15px" }}>
           <label style={{ display: "block", marginBottom: "5px" }}>

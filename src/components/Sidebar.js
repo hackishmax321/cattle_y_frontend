@@ -38,7 +38,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/logged/chat">
+          <Link to="/logged/chat/open-channel">
             <span className="nav-icon"><FaCommentDots className="ic"/></span>
             <span className="title">Communicate</span>
           </Link>

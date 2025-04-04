@@ -1047,26 +1047,45 @@ body {
 }
 
 .chatMessages {
-  height: 300px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .message {
-  margin: 5px 0;
-  padding: 8px;
-  border-radius: 5px;
+  max-width: 60%;
+  padding: 10px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
 }
 
+.message strong {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+/* Self messages (right-aligned) */
 .self {
-  background: #d1e7dd;
   align-self: flex-end;
+  background-color: #0078ff;
+  color: white;
+  border-top-right-radius: 0;
+  margin-left: 20%;
 }
 
+/* Other messages (left-aligned) */
 .other {
-  background: #f8d7da;
   align-self: flex-start;
+  background-color: #f1f1f1;
+  color: black;
+  border-top-left-radius: 0;
+  margin-right: 20%;
 }
 
 .chatInput {
@@ -1091,4 +1110,33 @@ body {
   cursor: pointer;
 }
 
+/* Clip Icon */
+.clipIcon {
+  cursor: pointer;
+  font-size: 20px;
+  color: #0078ff;
+}
 
+/* Image Preview */
+.imagePreview {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+/* File Icon */
+.fileIcon {
+  font-size: 24px;
+  color: #0078ff;
+  margin-top: 5px;
+}
+
+/* File Preview Container */
+.filePreviewContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}

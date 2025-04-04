@@ -84,7 +84,7 @@ const SignUp = () => {
           </div>
 
           <div className="form-group">
-            <label>Full Name</label>
+            <label>Full Name or Outlet Name</label>
             <input type="text" name="full_name" placeholder="Enter Full Name" value={formData.full_name} onChange={handleChange} />
           </div>
 

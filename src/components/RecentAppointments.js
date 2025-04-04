@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ENV from "../data/Env";
+import { Link } from "react-router-dom";
 
 const RecentAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -64,26 +65,47 @@ const RecentAppointments = () => {
                   border: "1px solid #ccc",
                   borderRadius: "5px",
                   backgroundColor: "#f9f9f9",
+                  display: "flex",
+                  justifyContent: "space-between", // Pushes JOIN button to the right
+                  alignItems: "center", // Aligns items properly
                 }}
               >
-                <strong>{appointment.title}</strong>
-                <p>Date: {appointment.date}</p>
-                <p>Time: {appointment.time}</p>
-                <p style={{ fontSize: "14px", color: "#555" }}>
-                  {appointment.message}
-                </p>
-                <span
+                <div>
+                  <strong>{appointment.title}</strong>
+                  <p>Date: {appointment.date}</p>
+                  <p>Time: {appointment.time}</p>
+                  <p style={{ fontSize: "14px", color: "#555" }}>
+                    {appointment.message}
+                  </p>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "6px 12px", // Slightly increased padding
+                      borderRadius: "5px",
+                      fontSize: "14px", // Slightly larger font
+                      backgroundColor: appointment.accepted ? "#28A745" : "#FFC107",
+                      color: "#fff",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {appointment.accepted ? "Accepted" : "Pending"}
+                  </span>
+                </div>
+                <Link
                   style={{
                     display: "inline-block",
-                    padding: "4px 8px",
+                    padding: "8px 16px", // Increased padding
                     borderRadius: "5px",
-                    fontSize: "12px",
-                    backgroundColor: appointment.accepted ? "#28A745" : "#FFC107",
+                    fontSize: "14px", // Slightly larger font
+                    backgroundColor: "#1abc9c",
                     color: "#fff",
+                    fontWeight: "bold",
+                    textDecoration: "none",
                   }}
+                  to={"/logged/chat/" + appointment.title}
                 >
-                  {appointment.accepted ? "Accepted" : "Pending"}
-                </span>
+                  JOIN
+                </Link>
               </li>
             ))}
           </ul>

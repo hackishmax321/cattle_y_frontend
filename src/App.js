@@ -38,7 +38,7 @@ function App() {
             <Route path="/logged/health-monitor" element={<HealthMonitor />} /> 
             <Route path="/logged/milk-production" element={<MilkProduction />} />
             <Route path="/logged/milk-records" element={<MilkHistory />} />
-            <Route path="/logged/chat" element={<ChatSection />} />
+            <Route path="/logged/chat/:receiver" element={<ChatSection />} />
             <Route path="/logged/map" element={<VetLocate />} />
             <Route path="*" element={<Navigate to="/" />} />
         
