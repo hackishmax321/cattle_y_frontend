@@ -38,7 +38,7 @@ const ChatMessages = () => {
 
     fetchPreviousMessages();
 
-    const url = `ws://localhost:8000/ws/${user.role!='Veterinarian'?user.username:user.full_name}`;
+    const url = `${ENV.SOCKET_SERVER}/ws/${user.role!='Veterinarian'?user.username:user.full_name}`;
     const ws = new WebSocket(url);
   
     ws.onopen = () => ws.send("Connect");
