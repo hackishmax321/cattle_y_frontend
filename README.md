@@ -1,9 +1,14 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cattle Management Web app
+This is a modern web-based cattle management application designed to help farmers efficiently monitor their livestock, detect diseases early using AI-powered image classification, track daily milk yields, and predict future production using regression analysis. This tool empowers farmers with data-driven insights to improve herd health and productivity.
 
 ## Available Features
-## Feature 1
+## Feature 1 - Cattle Diseases Detection with Image Calssification model
+Farmers can upload images of their cattle, and the system uses machine learning (CNN or Vision Transformer) to detect signs of common diseases such as:
+- Mastitis (udder infections)
+- Foot-and-Mouth Disease (FMD)
+- Lumpy Skin Disease
+- Respiratory Infections
+
 ![Feature 1 Screenshot](/snapshots/screen1.png)
 
 ## Feature 2
