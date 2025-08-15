@@ -4,10 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Features
 ## Feature 1
-![Feature 1 Screenshot](./snapshots/screen_1.png)
+![Feature 1 Screenshot](./snapshots/screen_ (1).png)
 
 ## Feature 2
-![Feature 2 Screenshot](./snapshots/screen_2.jpg)
+![Feature 2 Screenshot](./snapshots/screen_ (2).jpg)
 
 ## Architecture
 ![System Diagram](./snapshots/diagram.svg)
