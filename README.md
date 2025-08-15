@@ -11,8 +11,13 @@ Farmers can upload images of their cattle, and the system uses machine learning 
 
 ![Feature 1 Screenshot](/snapshots/screen1.png)
 
-## Feature 2
-![Feature 2 Screenshot](/snapshots/screen_ (2).jpg)
+## Feature 2 - Daily Milk Yield Tracking & Analytics
+Farmers can log daily milk production per cow, and the system provides:
+- Visual charts (line, bar graphs) for trends
+- Average yield calculations
+- Comparison between cows
+
+![Feature 2 Screenshot](/snapshots/screen2.png)
 
 ## Architecture
 ![System Diagram](./snapshots/diagram.svg)
