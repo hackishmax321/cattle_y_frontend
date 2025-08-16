@@ -23,10 +23,14 @@ Farmers can log daily milk production per cow, and the system provides:
 
 ![Feature 2 Screenshot](/snapshots/screen7.png)
 
-![Feature 2 Screenshot](/snapshots/screen4.png)
-
 ## Feature 3 - Future Prediction of Milk Yield data
-Using historical milk yield data, the system applies linear regression (yellow Line)
+Using historical milk yield data, the system applies linear regression 
+
+**Legend:**
+- <span style="color:gold">Predicted Milk Yield</span> — Yellow Line  
+- <span style="color:purple">Received Milk</span> — Purple Line
+
+![Feature 2 Screenshot](/snapshots/screen4.png)
 
 ![Feature 2 Screenshot](/snapshots/screen5.png)
 
