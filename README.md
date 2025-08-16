@@ -13,6 +13,19 @@ Farmers can upload images of their cattle, and the system uses machine learning 
 
 ![Feature 1 Screenshot](/snapshots/screen1.png)
 
+![Feature 1 Screenshot](/snapshots/screen8.png)
+
+### Training Results
+Following snaps shows results taken from Colabotory notebook including
+- Training Testing (validation) acuraciies graph
+![Traing and Validation Acuracies and Loss](/snapshots/train_and_loss.png)
+
+- Confusion Metrix
+![Confusion Matrix](/snapshots/con_metrix.png)
+
+- Testing with Images sample
+![Samples](/snapshots/sample_results.png)
+
 ## Feature 2 - Daily Milk Yield Tracking & Analytics
 Farmers can log daily milk production per cow, and the system provides:
 - Visual charts (line, bar graphs) for trends
@@ -27,8 +40,8 @@ Farmers can log daily milk production per cow, and the system provides:
 Using historical milk yield data, the system applies linear regression 
 
 **Legend:**
-- <span style="color:gold">Predicted Milk Yield</span> — Yellow Line  
-- <span style="color:purple">Received Milk</span> — Purple Line
+- 🟨 Predicted Milk Yield (Yellow Line)
+- 🟪 Received Milk (Purple Line)
 
 ![Feature 2 Screenshot](/snapshots/screen4.png)
 
