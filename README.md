@@ -1,6 +1,8 @@
 # Cattle Management Web app
 This is a modern web-based cattle management application designed to help farmers efficiently monitor their livestock, detect diseases early using AI-powered image classification, track daily milk yields, and predict future production using regression analysis. This tool empowers farmers with data-driven insights to improve herd health and productivity.
 
+![Feature 2 Screenshot](/snapshots/screen2.png)
+
 ## Available Features
 ## Feature 1 - Cattle Diseases Detection with Image Calssification model
 Farmers can upload images of their cattle, and the system uses machine learning (CNN or Vision Transformer) to detect signs of common diseases such as:
@@ -17,7 +19,16 @@ Farmers can log daily milk production per cow, and the system provides:
 - Average yield calculations
 - Comparison between cows
 
-![Feature 2 Screenshot](/snapshots/screen2.png)
+![Feature 2 Screenshot](/snapshots/screen6.png)
+
+![Feature 2 Screenshot](/snapshots/screen7.png)
+
+![Feature 2 Screenshot](/snapshots/screen4.png)
+
+## Feature 3 - Future Prediction of Milk Yield data
+Using historical milk yield data, the system applies linear regression (yellow Line)
+
+![Feature 2 Screenshot](/snapshots/screen5.png)
 
 ## Architecture
 ![System Diagram](./snapshots/diagram.svg)
