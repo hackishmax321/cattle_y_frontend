@@ -49,7 +49,7 @@ Using historical milk yield data, the system applies linear regression
 ![Feature 2 Screenshot](/snapshots/screen5.png)
 
 ## Architecture
-![System Diagram](./snapshots/diagram.svg)
+![System Diagram](./snapshots/system_diagram.png)
 
 ## Available Scripts
 
