@@ -16,7 +16,7 @@ Farmers can upload images of their cattle, and the system uses machine learning 
 ![Feature 1 Screenshot](/snapshots/screen8.png)
 
 ### Training Results
-Following snaps shows results taken from Colabotory notebook including
+Training is carried out with CNN image categorization and classification process to come up with custom CNN model.Following snaps shows results taken from Colabotory notebook including
 - Training Testing (validation) acuraciies graph
 ![Traing and Validation Acuracies and Loss](/snapshots/train_and_loss.png)
 
