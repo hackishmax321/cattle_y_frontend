@@ -21,6 +21,7 @@ Following snaps shows results taken from Colabotory notebook including
 ![Traing and Validation Acuracies and Loss](/snapshots/train_and_loss.png)
 
 - Confusion Metrix
+
 ![Confusion Matrix](/snapshots/con_metrix.png)
 
 - Testing with Images sample
